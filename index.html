@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pen</title>
+  </head>
+  <body>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER QUEST // 暗黑科技作品集選單</title>
+    <!-- Google Fonts: Orbitron (科技感字體) & Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0c10;
+            --bg-card: rgba(18, 22, 31, 0.85);
+            --red-neon: #ff2a5f;
+            --red-glow: rgba(255, 42, 95, 0.4);
+            --gold-accent: #ffb703;
+            --cyan-accent: #00f0ff;
+            --text-main: #f0f4f8;
+            --text-muted: #627284;
+            --border-dark: rgba(255, 255, 255, 0.1);
+            --font-tech: 'Orbitron', 'Noto Sans TC', sans-serif;
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-tech);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 32px 16px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Cyber Grid Background */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                linear-gradient(rgba(10, 12, 16, 0.92), rgba(10, 12, 16, 0.95)),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 240, 255, 0.03) 3px, rgba(0, 240, 255, 0.03) 3px),
+                radial-gradient(circle at 50% 20%, rgba(255, 42, 95, 0.15), transparent 60%);
+            background-size: 100% 100%, 100% 6px, 100% 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Glowing Laser Lines decor */
+        .laser-line {
+            position: fixed;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--red-neon), transparent);
+            top: 15%;
+            opacity: 0.3;
+            z-index: -1;
+            animation: pulseLaser 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseLaser {
+            0% { opacity: 0.1; transform: translateY(0); }
+            100% { opacity: 0.4; transform: translateY(20px); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        /* Header Title */
+        .header-title {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header-title h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #ffffff;
+            text-shadow: 0 0 12px var(--red-glow), 0 0 24px var(--red-neon);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .header-title h1 span {
+            color: var(--red-neon);
+        }
+
+        .header-title p {
+            font-size: 0.9rem;
+            color: var(--cyan-accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            background: rgba(0, 240, 255, 0.05);
+            padding: 4px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            display: inline-block;
+        }
+
+        /* Profile Hero Card */
+        .profile-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 42, 95, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 42, 95, 0.1);
+            border-radius: var(--radius);
+            padding: 28px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            margin-bottom: 36px;
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--red-neon);
+            box-shadow: 0 0 8px var(--red-neon);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin-bottom: 16px;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            width: 122px;
+            height: 122px;
+            border-radius: 50%;
+            border: 2px dashed var(--red-neon);
+            animation: rotateRing 12s linear infinite;
+        }
+
+        @keyframes rotateRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold-accent);
+            background: #111;
+        }
+
+        .level-badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: var(--gold-accent);
+            color: #000;
+            font-weight: 900;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(255, 183, 3, 0.6);
+        }
+
+        .user-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        /* Quest Progress Bar */
+        .progress-box {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--cyan-accent);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 12.5%; /* 2 / 16 = 12.5% */
+            background: linear-gradient(90deg, var(--red-neon), var(--gold-accent));
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--red-glow);
+            position: relative;
+        }
+
+        /* 16 Grid Section */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+        }
+
+        .grid-card {
+            position: relative;
+            min-height: 115px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dark);
+            border-radius: var(--radius);
+            text-decoration: none;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Unlocked Buttons */
+        .grid-card.unlocked {
+            border-color: rgba(255, 42, 95, 0.4);
+            cursor: pointer;
+        }
+
+        .grid-card.unlocked .card-num {
+            color: var(--red-neon);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .grid-card.unlocked .card-status {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--cyan-accent);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .grid-card.unlocked .card-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1;
+        }
+
+        /* Metallic Scan Sweep Effect for Unlocked Cards */
+        .grid-card.unlocked::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.15),
+                transparent
+            );
+            transform: rotate(25deg);
+            transition: all 0.6s ease;
+        }
+
+        .grid-card.unlocked:hover::after {
+            left: 130%;
+        }
+
+        /* Hover Effect: Unlocked */
+        .grid-card.unlocked:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: var(--red-neon);
+            box-shadow: 0 10px 25px rgba(255, 42, 95, 0.35), 0 0 12px var(--red-glow);
+            background: rgba(28, 34, 48, 0.9);
+        }
+
+        .grid-card.unlocked:hover .card-title {
+            color: var(--gold-accent);
+        }
+
+        /* Locked Buttons */
+        .grid-card.locked {
+            background: rgba(15, 18, 25, 0.6);
+            border-color: rgba(255, 255, 255, 0.05);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .grid-card.locked .card-num {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .grid-card.locked .card-status {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .grid-card.locked .card-title {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Hover Effect: Locked (Denied Shake) */
+        .grid-card.locked:hover {
+            animation: deniedShake 0.4s ease-in-out;
+            border-color: rgba(255, 42, 95, 0.3);
+            opacity: 0.8;
+        }
+
+        @keyframes deniedShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-5px); }
+            40% { transform: translateX(5px); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 48px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .footer span {
+            color: var(--red-neon);
+        }
+
+        /* Responsive Grid */
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .grid-card {
+                min-height: 100px;
+                padding: 12px;
+            }
+
+            .grid-card.unlocked .card-title,
+            .grid-card.locked .card-title {
+                font-size: 0.82rem;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Decor -->
+    <div class="cyber-bg"></div>
+    <div class="laser-line"></div>
+
+    <div class="container">
+        <!-- Header Title -->
+        <header class="header-title">
+            <h1>CYBER <span>QUEST</span></h1>
+            <p>網真程式課程 // 作品集闖關入口</p>
+        </header>
+
+        <!-- Player Profile Card -->
+        <section class="profile-card">
+            <div class="avatar-wrapper">
+                <div class="avatar-ring"></div>
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=CyberHacker" alt="玩家大頭貼" class="avatar-img" onerror="this.src='https://placehold.co/150x150/111111/ff2a5f?text=CYBER'">
+                <div class="level-badge">LV.99</div>
+            </div>
+            
+            <h2 class="user-name">CYBER_PLAYER</h2>
+            <div class="user-role">SYSTEM DEVELOPER // CLASS 2026</div>
+
+            <!-- RPG Quest Progress -->
+            <div class="progress-box">
+                <div class="progress-header">
+                    <span>QUEST PROGRESS</span>
+                    <span>2 / 16 COMPLETE (12.5%)</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 16 Quest Stage Grid -->
+        <main class="grid-container">
+            
+            <!-- Button 1 (Unlocked) -->
+            <a href="w1/index.html" class="grid-card unlocked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 01</span>
+                    <span class="card-status">READY</span>
+                </div>
+                <div class="card-title">
+                    ⚡ Week 1 - 數位名片
+                </div>
+            </a>
+
+            <!-- Button 2 (Unlocked) -->
+            <a href="w2/index.html" class="grid-card unlocked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 02</span>
+                    <span class="card-status">READY</span>
+                </div>
+                <div class="card-title">
+                    ⚡ Week 2 - 今天吃甚麼？
+                </div>
+            </a>
+
+            <!-- Buttons 3 to 16 (Locked) -->
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 03</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 3 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 04</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 4 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 05</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 5 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 06</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 6 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 07</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 7 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 08</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 8 - 期中關卡
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 09</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 9 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 10</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 10 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 11</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 11 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 12</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 12 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 13</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 13 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 14</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 14 - 未知任務
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 15</span>
+                    <span class="card-status">LOCKED</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 15 - 終極試煉
+                </div>
+            </a>
+
+            <a href="javascript:void(0)" class="grid-card locked">
+                <div class="card-top">
+                    <span class="card-num">STAGE 16</span>
+                    <span class="card-status">BOSS 👑</span>
+                </div>
+                <div class="card-title">
+                    🔒 Week 16 - 最終大 Boss
+                </div>
+            </a>
+
+        </main>
